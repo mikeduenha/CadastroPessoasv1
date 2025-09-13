@@ -8,7 +8,7 @@ public class PessoaFisicaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer idPessoa;
+    private Integer idPessoaPF;
     @Column
     private String nome;
     @Column
@@ -25,12 +25,12 @@ public class PessoaFisicaModel {
     private Integer idEndereco ;
 
 
-    public Integer getIdPessoa() {
-        return idPessoa;
+    public Integer getIdPessoaPF() {
+        return idPessoaPF;
     }
 
-    public void setIdPessoa(Integer idPessoa) {
-        this.idPessoa = idPessoa;
+    public void setIdPessoaPF(Integer idPessoa) {
+        this.idPessoaPF = idPessoa;
     }
 
     public String getNome() {
