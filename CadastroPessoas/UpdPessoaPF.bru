@@ -1,0 +1,27 @@
+meta {
+  name: UpdPessoaPF
+  type: http
+  seq: 6
+}
+
+put {
+  url: http://localhost:8080/api/pessoafisica/2
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+     "nome": "Kevim",
+     "cpf": "cpfdokevimZUERO",
+     "rg": "rgdokevim",
+     "email": "kevim@gmail.com",
+     "telefone": "telefonekevim",
+     "celular": "celularkevim",
+     "idEndereco": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}

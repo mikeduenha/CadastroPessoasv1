@@ -1,0 +1,26 @@
+meta {
+  name: AddPessoaPJ
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:8080/api/pessoajuridica/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+     "nome": "Kevim",
+     "cnpj": "cnpjdokevim",
+     "email": "kevim@gmail.com",
+     "telefone": "telefonekevim",
+     "celular": "celularkevim",
+     "idEndereco": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
