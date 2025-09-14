@@ -3,18 +3,18 @@ package Pessoas.example.CadastroPessoas.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "C_CADASTRO_PF")
-public class PessoaFisicaModel {
+@Table(name = "C_CADASTRO_PJ")
+public class PessoaJuridicaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer idPessoaPF;
+    private Integer idPessoaPJ;
 
-    @OneToOne(mappedBy = "pessoapf", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "pessoapj", cascade = CascadeType.ALL)
     private PessoaEnderecoModel endereco;
 
     @Column
-    private String cpf;
+    private String cnpj;
     @Column
     private String nome;
     @Column
@@ -23,14 +23,15 @@ public class PessoaFisicaModel {
     private String telefone;
     @Column
     private String celular;
+    @Column
+    private Integer idEndereco ;
 
-
-    public Integer getIdPessoaPF() {
-        return idPessoaPF;
+    public Integer getIdPessoaPJ() {
+        return idPessoaPJ;
     }
 
-    public void setIdPessoaPF(Integer idPessoaPF) {
-        this.idPessoaPF = idPessoaPF;
+    public void setIdPessoaPJ(Integer idPessoaPJ) {
+        this.idPessoaPJ = idPessoaPJ;
     }
 
     public PessoaEnderecoModel getEndereco() {
@@ -41,12 +42,12 @@ public class PessoaFisicaModel {
         this.endereco = endereco;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getNome() {
@@ -79,5 +80,13 @@ public class PessoaFisicaModel {
 
     public void setCelular(String celular) {
         this.celular = celular;
+    }
+
+    public Integer getIdEndereco() {
+        return idEndereco;
+    }
+
+    public void setIdEndereco(Integer idEndereco) {
+        this.idEndereco = idEndereco;
     }
 }

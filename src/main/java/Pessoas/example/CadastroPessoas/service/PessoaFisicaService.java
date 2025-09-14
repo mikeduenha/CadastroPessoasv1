@@ -30,6 +30,7 @@ public class PessoaFisicaService {
     public Optional<PessoaFisicaModel> findById(Integer id) {return pessoaFisicaRepository.findById(id);}
     public Optional<PessoaFisicaModel> findByCpf(String cpf) {return pessoaFisicaRepository.findByCpf(cpf);}
     public Optional<PessoaFisicaModel> findByCelular(String celular) {return pessoaFisicaRepository.findByCelular(celular);}
+
     public Optional<PessoaFisicaModel> updPessoa(Integer id, PessoaFisicaModel pessoaFisicaModel) {
         var optional = findById(id);
         if (optional.isEmpty()) {
@@ -38,25 +39,23 @@ public class PessoaFisicaService {
         var pessoaloriginal = optional.get();
         pessoaloriginal.setNome(pessoaFisicaModel.getNome());
         pessoaloriginal.setCpf(pessoaFisicaModel.getCpf());
-        pessoaloriginal.setRg(pessoaFisicaModel.getRg());
         pessoaloriginal.setEmail(pessoaFisicaModel.getEmail());
         pessoaloriginal.setTelefone(pessoaFisicaModel.getTelefone());
-        pessoaloriginal.setIdEndereco(pessoaFisicaModel.getIdEndereco());
 
         return Optional.of(pessoaFisicaRepository.save(pessoaloriginal)) ;
     }
 
     public boolean deletePessoa(Integer id) {
         try{
-            var optional = findById(id);
+            var optional = pessoaFisicaRepository.findById(id);
 
             if (optional.isEmpty()) {
                 return false;
             }
             pessoaFisicaRepository.deleteById(id);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
             return false;
         }
     }

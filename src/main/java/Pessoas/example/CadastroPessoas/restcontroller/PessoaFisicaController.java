@@ -21,6 +21,18 @@ public class PessoaFisicaController {
     @GetMapping("/")
     public List<PessoaFisicaModel> findAll() {return pessoaFisicaService.listar();}
 
+
+    @PostMapping("/")
+    public ResponseEntity<Void> addPessoa(@RequestBody PessoaFisicaModel pessoapf) {
+      try{
+          pessoaFisicaService.addPessoa(pessoapf);
+          return ResponseEntity.status(HttpStatus.CREATED).build();
+      } catch (Exception ex){
+          ex.printStackTrace();
+          return ResponseEntity.notFound().build();
+      }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<PessoaFisicaModel> findById(@PathVariable int id) {
         var pessoapfopt = pessoaFisicaService.findById(id);
@@ -28,7 +40,7 @@ public class PessoaFisicaController {
         if (pessoapfopt.isPresent()) {
             return ResponseEntity.ok(pessoapfopt.get());
         }
-       return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/cpf/{cpf}")
@@ -49,16 +61,6 @@ public class PessoaFisicaController {
         }
         return ResponseEntity.notFound().build();
     }
-    @PostMapping("/")
-    public ResponseEntity<Void> addPessoa(@RequestBody PessoaFisicaModel pessoapf) {
-      try{
-          pessoaFisicaService.addPessoa(pessoapf);
-          return ResponseEntity.status(HttpStatus.CREATED).build();
-      } catch (Exception ex){
-          ex.printStackTrace();
-          return ResponseEntity.notFound().build();
-      }
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updPessoa(@PathVariable int id, @RequestBody PessoaFisicaModel pessoapf) {
@@ -68,7 +70,7 @@ public class PessoaFisicaController {
             if (opt.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception ex){
 
             ex.printStackTrace();
@@ -91,5 +93,4 @@ public class PessoaFisicaController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }
