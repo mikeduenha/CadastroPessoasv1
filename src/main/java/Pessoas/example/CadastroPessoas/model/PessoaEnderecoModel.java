@@ -2,6 +2,8 @@ package Pessoas.example.CadastroPessoas.model;
 
 import jakarta.persistence.*;
 
+import java.util.Optional;
+
 @Entity
 @Table(name = "C_CADASTRO_ENDERECO")
 public class PessoaEnderecoModel {
@@ -12,9 +14,7 @@ public class PessoaEnderecoModel {
     private Integer idEndereco;
 
     @OneToOne
-    private PessoaFisicaModel pessoapf;
-    @OneToOne
-    private PessoaJuridicaModel pessoapj;
+    private PessoaModel pessoa;
 
     @Column
     private String cep;
@@ -43,28 +43,20 @@ public class PessoaEnderecoModel {
     @Column
     private String siafi;
 
+    public PessoaModel getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(PessoaModel pessoa) {
+        this.pessoa = pessoa;
+    }
+
     public Integer getIdEndereco() {
         return idEndereco;
     }
 
     public void setIdEndereco(Integer idEndereco) {
         this.idEndereco = idEndereco;
-    }
-
-    public PessoaFisicaModel getPessoapf() {
-        return pessoapf;
-    }
-
-    public void setPessoapf(PessoaFisicaModel pessoapf) {
-        this.pessoapf = pessoapf;
-    }
-
-    public PessoaJuridicaModel getPessoapj() {
-        return pessoapj;
-    }
-
-    public void setPessoapj(PessoaJuridicaModel pessoapj) {
-        this.pessoapj = pessoapj;
     }
 
     public String getCep() {

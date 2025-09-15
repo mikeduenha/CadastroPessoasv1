@@ -3,14 +3,16 @@ package Pessoas.example.CadastroPessoas.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "C_CADASTRO_PJ")
-public class PessoaJuridicaModel {
+@Table(name = "C_CADASTRO_PESSOA")
+public class PessoaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer idPessoaPJ;
-    @Column
-    private String cnpj;
+    private Integer idPessoa;
+
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private PessoaEnderecoModel endereco;
+
     @Column
     private String nome;
     @Column
@@ -19,23 +21,21 @@ public class PessoaJuridicaModel {
     private String telefone;
     @Column
     private String celular;
-    @Column
-    private Integer idEndereco ;
 
-    public Integer getIdPessoaPJ() {
-        return idPessoaPJ;
+    public Integer getIdPessoa() {
+        return idPessoa;
     }
 
-    public void setIdPessoaPJ(Integer idPessoaPJ) {
-        this.idPessoaPJ = idPessoaPJ;
+    public void setIdPessoa(Integer idPessoa) {
+        this.idPessoa = idPessoa;
     }
 
-    public String getCnpj() {
-        return cnpj;
+    public PessoaEnderecoModel getEndereco() {
+        return endereco;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public void setEndereco(PessoaEnderecoModel endereco) {
+        this.endereco = endereco;
     }
 
     public String getNome() {
@@ -68,13 +68,5 @@ public class PessoaJuridicaModel {
 
     public void setCelular(String celular) {
         this.celular = celular;
-    }
-
-    public Integer getIdEndereco() {
-        return idEndereco;
-    }
-
-    public void setIdEndereco(Integer idEndereco) {
-        this.idEndereco = idEndereco;
     }
 }

@@ -13,50 +13,8 @@ public class PessoaFisicaService {
     private final PessoaFisicaRepository pessoaFisicaRepository;
 
     public PessoaFisicaService(PessoaFisicaRepository pessoaFisicaRepository) {
-        this.pessoaFisicaRepository = pessoaFisicaRepository;
-        PessoaFisicaModel pessoapf = new PessoaFisicaModel();
-      
-        pessoaFisicaRepository.save(pessoapf);
-    }
+      this.pessoaFisicaRepository = pessoaFisicaRepository;
+       }
 
-    public void addPessoa(PessoaFisicaModel pessoaFisicaModel) {
-        pessoaFisicaRepository.save(pessoaFisicaModel);
-    }
 
-    public List<PessoaFisicaModel> listar() {
-        return pessoaFisicaRepository.findAll();
-    }
-
-    public Optional<PessoaFisicaModel> findById(Integer id) {return pessoaFisicaRepository.findById(id);}
-    public Optional<PessoaFisicaModel> findByCpf(String cpf) {return pessoaFisicaRepository.findByCpf(cpf);}
-    public Optional<PessoaFisicaModel> findByCelular(String celular) {return pessoaFisicaRepository.findByCelular(celular);}
-
-    public Optional<PessoaFisicaModel> updPessoa(Integer id, PessoaFisicaModel pessoaFisicaModel) {
-        var optional = findById(id);
-        if (optional.isEmpty()) {
-            return Optional.empty();
-        }
-        var pessoaloriginal = optional.get();
-        pessoaloriginal.setNome(pessoaFisicaModel.getNome());
-        pessoaloriginal.setCpf(pessoaFisicaModel.getCpf());
-        pessoaloriginal.setEmail(pessoaFisicaModel.getEmail());
-        pessoaloriginal.setTelefone(pessoaFisicaModel.getTelefone());
-
-        return Optional.of(pessoaFisicaRepository.save(pessoaloriginal)) ;
-    }
-
-    public boolean deletePessoa(Integer id) {
-        try{
-            var optional = pessoaFisicaRepository.findById(id);
-
-            if (optional.isEmpty()) {
-                return false;
-            }
-            pessoaFisicaRepository.deleteById(id);
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
 }

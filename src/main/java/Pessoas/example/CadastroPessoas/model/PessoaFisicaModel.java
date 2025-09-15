@@ -9,10 +9,6 @@ public class PessoaFisicaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer idPessoaPF;
-
-    @OneToOne(mappedBy = "pessoapf", cascade = CascadeType.ALL)
-    private PessoaEnderecoModel endereco;
-
     @Column
     private String cpf;
     @Column
@@ -31,14 +27,6 @@ public class PessoaFisicaModel {
 
     public void setIdPessoaPF(Integer idPessoaPF) {
         this.idPessoaPF = idPessoaPF;
-    }
-
-    public PessoaEnderecoModel getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(PessoaEnderecoModel endereco) {
-        this.endereco = endereco;
     }
 
     public String getCpf() {
