@@ -1,0 +1,27 @@
+meta {
+  name: UpdEndereco
+  type: http
+  seq: 18
+}
+
+put {
+  url: http://localhost:8080/api/enderece/2
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+     "nome": "Kevim",
+     "cpf": "cpfdokevimZUERO",
+     "rg": "rgdokevim",
+     "email": "kevim@gmail.com",
+     "telefone": "telefonekevim",
+     "celular": "celularkevim",
+     "idEndereco": 5
+  }
+}
+
+settings {
+  encodeUrl: true
+}

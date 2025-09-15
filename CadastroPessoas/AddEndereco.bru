@@ -1,0 +1,33 @@
+meta {
+  name: AddEndereco
+  type: http
+  seq: 17
+}
+
+post {
+  url: http://localhost:8080/api/pessoa/1/endereco
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+     "cep": "09100",
+     "logradouro": "aaaaa",
+     "complemento": "aaaaaa",
+     "unidade": "1",
+     "bairro": "bbbbbb",
+     "localidade": "local",
+     "uf": "sp",
+     "estado": "ccccccccc",
+     "regiao": "aaaaaaaa",
+     "ibge": "dddddddddd",
+     "gia": "eeeeeeee",
+     "ddd": "aaaaaaaaa",
+     "siafi": "aaaaaaaaaaa"  
+  }
+}
+
+settings {
+  encodeUrl: true
+}
