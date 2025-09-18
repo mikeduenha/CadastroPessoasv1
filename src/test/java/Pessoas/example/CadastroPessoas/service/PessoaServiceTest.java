@@ -1,7 +1,11 @@
 package Pessoas.example.CadastroPessoas.service;
 
 import Pessoas.example.CadastroPessoas.model.PessoaEnderecoModel;
+import Pessoas.example.CadastroPessoas.model.PessoaFisicaModel;
+import Pessoas.example.CadastroPessoas.model.PessoaJuridicaModel;
 import Pessoas.example.CadastroPessoas.model.PessoaModel;
+import Pessoas.example.CadastroPessoas.repository.PessoaFisicaRepository;
+import Pessoas.example.CadastroPessoas.repository.PessoaJuridicaRepository;
 import Pessoas.example.CadastroPessoas.repository.PessoaRepository;
 import Pessoas.example.CadastroPessoas.repository.PessoaEnderecoRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +17,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +36,12 @@ class PessoaServiceTest {
 
     @Mock
     private PessoaEnderecoRepository pessoaEnderecoRepository;
+
+    @Mock
+    private PessoaFisicaRepository pessoaFisicaRepository;
+
+    @Mock
+    private PessoaJuridicaRepository pessoaJuridicaRepository;
 
     @InjectMocks
     private PessoaService pessoaService;
@@ -113,7 +124,6 @@ class PessoaServiceTest {
             //Assert
             assertTrue(output.isPresent());
             assertEquals(pessoa.getIdPessoa(), captorPessoaId.getValue());
-
         }
 
         @Test
@@ -243,7 +253,6 @@ class PessoaServiceTest {
 
             //Assert
             verify(pessoaRepository, times(1)).findById(pessoa.getIdPessoa());
-
         }
     }
 
@@ -293,13 +302,12 @@ class PessoaServiceTest {
         }
     }
 
-
     @Nested
-    class createEndereco{
+    class createEndereco {
 
         @Test
         @DisplayName("Should create a address with sucess")
-        void shouldAddAddressWithSucess(){
+        void shouldAddAddressWithSucess() {
 
             // Arrange
             var pessoa = new PessoaModel();
@@ -327,13 +335,342 @@ class PessoaServiceTest {
             pessoaEndereco.setSiafi("siafi");
 
             doReturn(Optional.of(pessoa)).when(pessoaRepository).findById(captorPessoaId.capture());
-            doReturn(Optional.of(pessoaEndereco)).when(pessoaEnderecoRepository).save(captorEndereco.capture());
+            doReturn(pessoaEndereco).when(pessoaEnderecoRepository).save(captorEndereco.capture());
 
             //Act
-            pessoaService.createEndereco(pessoa.getIdPessoa(), pessoaEndereco);
+            var output = pessoaService.createEndereco(pessoa.getIdPessoa(), pessoaEndereco);
+            assertNotNull(output);
             verify(pessoaRepository, times(1)).findById(pessoa.getIdPessoa());
+        }
 
+        @Test
+        @DisplayName("Should return null when pessoa not exists")
+        void shouldReturnNullWhenPessoaNotFound() {
+            // Arrange
+            var enderecoInput = new PessoaEnderecoModel();
+            doReturn(Optional.empty()).when(pessoaRepository).findById(2);
+
+            // Act
+            var result = pessoaService.createEndereco(2, enderecoInput);
+
+            // Assert
+            assertNull(result);
         }
     }
 
+        @Nested
+        class updEndereco {
+
+            @Test
+            @DisplayName("Should update endereço when pessoa exists")
+            void shouldUpdateEnderecoWhenPessoaExists() {
+                // Arrange
+                var pessoa = new PessoaModel();
+                pessoa.setIdPessoa(1);
+
+                var enderecoExistente = new PessoaEnderecoModel();
+                enderecoExistente.setPessoa(pessoa);
+
+                var enderecoInput = new PessoaEnderecoModel();
+                enderecoInput.setCep("novoCep");
+
+                when(pessoaRepository.findById(1)).thenReturn(Optional.of(pessoa));
+                when(pessoaEnderecoRepository.findByPessoa(pessoa)).thenReturn(Optional.of(enderecoExistente));
+                when(pessoaEnderecoRepository.save(any(PessoaEnderecoModel.class))).thenReturn(enderecoExistente);
+
+                // Act
+                var result = pessoaService.updEndereco(1, enderecoInput);
+
+                // Assert
+                assertTrue(result.isPresent());
+                assertEquals("novoCep", result.get().getCep());
+                verify(pessoaEnderecoRepository, times(1)).save(enderecoExistente);
+            }
+
+            @Test
+            @DisplayName("Should return Optional.empty when pessoa not exist")
+            void shouldReturnEmptyWhenPessoaNotExists() {
+                // Arrange
+                when(pessoaRepository.findById(2)).thenReturn(Optional.empty());
+
+                // Act
+                var result = pessoaService.updEndereco(2, new PessoaEnderecoModel());
+
+                // Assert
+                assertTrue(result.isEmpty());
+                verify(pessoaEnderecoRepository, never()).save(any());
+            }
+    }
+
+    @Nested
+    class findEndereco {
+
+        @Test
+        @DisplayName("Should return endereço when pessoa exists")
+        void shouldReturnEnderecoWhenPessoaExists() {
+            // Arrange
+            var pessoa = new PessoaModel();
+            pessoa.setIdPessoa(1);
+
+            var endereco = new PessoaEnderecoModel();
+            endereco.setPessoa(pessoa);
+            endereco.setCep("12345-678");
+
+            when(pessoaRepository.findById(1)).thenReturn(Optional.of(pessoa));
+            when(pessoaEnderecoRepository.findByPessoa(pessoa)).thenReturn(Optional.of(endereco));
+
+            // Act
+            var result = pessoaService.findEndereco(1);
+
+            // Assert
+            assertTrue(result.isPresent());
+            assertEquals("12345-678", result.get().getCep());
+            verify(pessoaRepository, times(1)).findById(1);
+            verify(pessoaEnderecoRepository, times(1)).findByPessoa(pessoa);
+        }
+
+        @Test
+        @DisplayName("Should exception when pessoa not exists")
+        void shouldThrowExceptionWhenPessoaNotExists() {
+            // Arrange
+            when(pessoaRepository.findById(2)).thenReturn(Optional.empty());
+
+            // Act & Assert
+            assertThrows(ResponseStatusException.class, () -> pessoaService.findEndereco(2));
+            verify(pessoaRepository, times(1)).findById(2);
+            verify(pessoaEnderecoRepository, never()).findByPessoa(any());
+        }
+    }
+
+    @Nested
+    class createPF {
+
+        @Test
+        @DisplayName("Should create PessoaFisica when pessoa exists")
+        void shouldCreatePFWhenPessoaExists() {
+            var pessoa = new PessoaModel();
+            pessoa.setIdPessoa(1);
+
+            var pfInput = new PessoaFisicaModel();
+            pfInput.setCpf("123");
+            pfInput.setRg("456");
+            pfInput.setDatanasc("2000-01-01");
+
+            var pfSaved = new PessoaFisicaModel();
+            pfSaved.setPessoa(pessoa);
+            pfSaved.setCpf("123");
+            pfSaved.setRg("456");
+            pfSaved.setDatanasc("2000-01-01");
+
+            when(pessoaRepository.findById(1)).thenReturn(Optional.of(pessoa));
+            when(pessoaFisicaRepository.save(any(PessoaFisicaModel.class))).thenReturn(pfSaved);
+
+            var result = pessoaService.createPF(1, pfInput);
+
+            assertNotNull(result);
+            assertEquals("123", result.getCpf());
+            verify(pessoaFisicaRepository, times(1)).save(any(PessoaFisicaModel.class));
+        }
+
+        @Test
+        @DisplayName("Should return null when pessoa not exists")
+        void shouldReturnNullWhenPessoaNotExists() {
+            var pfInput = new PessoaFisicaModel();
+            when(pessoaRepository.findById(2)).thenReturn(Optional.empty());
+
+            var result = pessoaService.createPF(2, pfInput);
+
+            assertNull(result);
+            verify(pessoaFisicaRepository, never()).save(any());
+        }
+    }
+
+    @Nested
+    class findPF {
+
+        @Test
+        @DisplayName("Should return PessoaFisica when pessoa exists")
+        void shouldReturnPFWhenPessoaExists() {
+            var pessoa = new PessoaModel();
+            pessoa.setIdPessoa(1);
+
+            var pf = new PessoaFisicaModel();
+            pf.setPessoa(pessoa);
+            pf.setCpf("123");
+
+            when(pessoaRepository.findById(1)).thenReturn(Optional.of(pessoa));
+            when(pessoaFisicaRepository.findByPessoa(pessoa)).thenReturn(Optional.of(pf));
+
+            var result = pessoaService.findPF(1);
+
+            assertTrue(result.isPresent());
+            assertEquals("123", result.get().getCpf());
+            verify(pessoaFisicaRepository, times(1)).findByPessoa(pessoa);
+        }
+
+        @Test
+        @DisplayName("Should exception when pessoa not exists")
+        void shouldThrowExceptionWhenPessoaNotExists() {
+            when(pessoaRepository.findById(2)).thenReturn(Optional.empty());
+
+            assertThrows(ResponseStatusException.class, () -> pessoaService.findPF(2));
+            verify(pessoaFisicaRepository, never()).findByPessoa(any());
+        }
+    }
+
+    @Nested
+    class updPF {
+
+        @Test
+        @DisplayName("Should update PessoaFisica when pessoa exists")
+        void shouldUpdatePFWhenPessoaExists() {
+            var pessoa = new PessoaModel();
+            pessoa.setIdPessoa(1);
+
+            var pfExistente = new PessoaFisicaModel();
+            pfExistente.setPessoa(pessoa);
+            pfExistente.setCpf("oldCpf");
+
+            var pfInput = new PessoaFisicaModel();
+            pfInput.setCpf("newCpf");
+            pfInput.setRg("newRg");
+            pfInput.setDatanasc("2020-01-01");
+
+            when(pessoaRepository.findById(1)).thenReturn(Optional.of(pessoa));
+            when(pessoaFisicaRepository.findByPessoa(pessoa)).thenReturn(Optional.of(pfExistente));
+            when(pessoaFisicaRepository.save(any(PessoaFisicaModel.class))).thenReturn(pfExistente);
+
+            var result = pessoaService.updPF(1, pfInput);
+
+            assertTrue(result.isPresent());
+            assertEquals("newCpf", result.get().getCpf());
+            verify(pessoaFisicaRepository, times(1)).save(pfExistente);
+        }
+
+        @Test
+        @DisplayName("Should return Optional.empty when pessoa not exists")
+        void shouldReturnEmptyWhenPessoaNotExists() {
+            var pfInput = new PessoaFisicaModel();
+            when(pessoaRepository.findById(2)).thenReturn(Optional.empty());
+
+            var result = pessoaService.updPF(2, pfInput);
+
+            assertTrue(result.isEmpty());
+            verify(pessoaFisicaRepository, never()).save(any());
+        }
+    }
+    @Nested
+    class createPJ {
+
+        @Test
+        @DisplayName("Should create PessoaJuridica when pessoa exists")
+        void shouldCreatePJWhenPessoaExists() {
+            var pessoa = new PessoaModel();
+            pessoa.setIdPessoa(1);
+
+            var pjInput = new PessoaJuridicaModel();
+            pjInput.setCnpj("123456789");
+            pjInput.setRazaosocial("Empresa X");
+
+            var pjSaved = new PessoaJuridicaModel();
+            pjSaved.setPessoa(pessoa);
+            pjSaved.setCnpj("123456789");
+            pjSaved.setRazaosocial("Empresa X");
+
+            when(pessoaRepository.findById(1)).thenReturn(Optional.of(pessoa));
+            when(pessoaJuridicaRepository.save(any(PessoaJuridicaModel.class))).thenReturn(pjSaved);
+
+            var result = pessoaService.createPJ(1, pjInput);
+
+            assertNotNull(result);
+            assertEquals("123456789", result.getCnpj());
+            verify(pessoaJuridicaRepository, times(1)).save(any(PessoaJuridicaModel.class));
+        }
+
+        @Test
+        @DisplayName("Should return null when pessoa not exists")
+        void shouldReturnNullWhenPessoaNotExists() {
+            var pjInput = new PessoaJuridicaModel();
+            when(pessoaRepository.findById(2)).thenReturn(Optional.empty());
+
+            var result = pessoaService.createPJ(2, pjInput);
+
+            assertNull(result);
+            verify(pessoaJuridicaRepository, never()).save(any());
+        }
+    }
+
+    @Nested
+    class findPJ {
+
+        @Test
+        @DisplayName("Should return PessoaJuridica when pessoa exists")
+        void shouldReturnPJWhenPessoaExists() {
+            var pessoa = new PessoaModel();
+            pessoa.setIdPessoa(1);
+
+            var pj = new PessoaJuridicaModel();
+            pj.setPessoa(pessoa);
+            pj.setCnpj("123456789");
+
+            when(pessoaRepository.findById(1)).thenReturn(Optional.of(pessoa));
+            when(pessoaJuridicaRepository.findByPessoa(pessoa)).thenReturn(Optional.of(pj));
+
+            var result = pessoaService.findPJ(1);
+
+            assertTrue(result.isPresent());
+            assertEquals("123456789", result.get().getCnpj());
+            verify(pessoaJuridicaRepository, times(1)).findByPessoa(pessoa);
+        }
+
+        @Test
+        @DisplayName("Should exception when pessoa not exists")
+        void shouldThrowExceptionWhenPessoaNotExists() {
+            when(pessoaRepository.findById(2)).thenReturn(Optional.empty());
+
+            assertThrows(ResponseStatusException.class, () -> pessoaService.findPJ(2));
+            verify(pessoaJuridicaRepository, never()).findByPessoa(any());
+        }
+    }
+
+    @Nested
+    class updPJ {
+
+        @Test
+        @DisplayName("Should update PessoaJuridica when pessoa exists")
+        void shouldUpdatePJWhenPessoaExists() {
+            var pessoa = new PessoaModel();
+            pessoa.setIdPessoa(1);
+
+            var pjExistente = new PessoaJuridicaModel();
+            pjExistente.setPessoa(pessoa);
+            pjExistente.setCnpj("oldCnpj");
+
+            var pjInput = new PessoaJuridicaModel();
+            pjInput.setCnpj("newCnpj");
+            pjInput.setRazaosocial("Nova Empresa");
+
+            when(pessoaRepository.findById(1)).thenReturn(Optional.of(pessoa));
+            when(pessoaJuridicaRepository.findByPessoa(pessoa)).thenReturn(Optional.of(pjExistente));
+            when(pessoaJuridicaRepository.save(any(PessoaJuridicaModel.class))).thenReturn(pjExistente);
+
+            var result = pessoaService.updPJ(1, pjInput);
+
+            assertTrue(result.isPresent());
+            assertEquals("newCnpj", result.get().getCnpj());
+            verify(pessoaJuridicaRepository, times(1)).save(pjExistente);
+        }
+
+        @Test
+        @DisplayName("Should return Optional.empty when pessoa not exists")
+        void shouldReturnEmptyWhenPessoaNotExists() {
+            var pjInput = new PessoaJuridicaModel();
+            when(pessoaRepository.findById(2)).thenReturn(Optional.empty());
+
+            var result = pessoaService.updPJ(2, pjInput);
+
+            assertTrue(result.isEmpty());
+            verify(pessoaJuridicaRepository, never()).save(any());
+        }
+    }
 }

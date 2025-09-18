@@ -8,7 +8,8 @@ services:
     environment:
       - MYSQL_USER=springuser
       - MYSQL_PASSWORD=ThePassword
-      - MYSQL_DATABASE=db_example
+      - MYSQL_DATABASE=dp_pessoas
       - MYSQL_ROOT_PASSWORD=root
     volumes:
       - "./conf.d:/etc/mysql/conf.d:ro"
+      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"

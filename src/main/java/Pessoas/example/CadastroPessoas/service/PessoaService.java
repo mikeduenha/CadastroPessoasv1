@@ -64,12 +64,12 @@ public class PessoaService {
     }
 
     //Metodos Endereço da Pessoa
-    public Object createEndereco(int id, PessoaEnderecoModel pessoaEnderecoModel) {
+    public PessoaEnderecoModel createEndereco(int id, PessoaEnderecoModel pessoaEnderecoModel) {
 
         var optional = findById(id);
 
         if (optional.isEmpty()) {
-            return Optional.empty();
+            return null;
         }
         var pessoa = optional.get();
 
@@ -90,7 +90,7 @@ public class PessoaService {
         pessoaEndereco.setDdd(pessoaEnderecoModel.getDdd());
         pessoaEndereco.setSiafi(pessoaEnderecoModel.getSiafi());
 
-        return Optional.of(pessoaEnderecoRepository.save(pessoaEndereco)) ;
+        return pessoaEnderecoRepository.save(pessoaEndereco);
     }
 
     public Optional<PessoaEnderecoModel> findEndereco(int id) {
@@ -131,12 +131,12 @@ public class PessoaService {
     }
 
     //Metodos Pessoa Fisica da Pessoa
-    public Object createPF(int id, PessoaFisicaModel pessoaFisicaModel) {
+    public PessoaFisicaModel createPF(int id, PessoaFisicaModel pessoaFisicaModel) {
 
         var optional = findById(id);
 
         if (optional.isEmpty()) {
-            return Optional.empty();
+            return null;
         }
         var pessoa = optional.get();
 
@@ -146,7 +146,7 @@ public class PessoaService {
         pessoaFisica.setRg(pessoaFisicaModel.getRg());
         pessoaFisica.setDatanasc(pessoaFisicaModel.getDatanasc());
 
-        return Optional.of(pessoaFisicaRepository.save(pessoaFisica)) ;
+        return pessoaFisicaRepository.save(pessoaFisica);
     }
 
     public Optional<PessoaFisicaModel> findPF(int id) {
@@ -177,12 +177,12 @@ public class PessoaService {
     }
 
     //Metodos Pessoa Juridica da Pessoa
-    public Object createPJ(int id, PessoaJuridicaModel pessoaJuridicaModel) {
+    public PessoaJuridicaModel createPJ(int id, PessoaJuridicaModel pessoaJuridicaModel) {
 
         var optional = findById(id);
 
         if (optional.isEmpty()) {
-            return Optional.empty();
+            return null;
         }
         var pessoa = optional.get();
 
@@ -191,7 +191,7 @@ public class PessoaService {
         pessoaJuridica.setCnpj(pessoaJuridicaModel.getCnpj());
         pessoaJuridica.setRazaosocial(pessoaJuridicaModel.getRazaosocial());
 
-        return Optional.of(pessoaJuridicaRepository.save(pessoaJuridica)) ;
+        return pessoaJuridicaRepository.save(pessoaJuridica);
     }
 
     public Optional<PessoaJuridicaModel> findPJ(int id) {
