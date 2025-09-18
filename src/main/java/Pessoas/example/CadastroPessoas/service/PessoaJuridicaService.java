@@ -16,5 +16,8 @@ public class PessoaJuridicaService {
         this.pessoaJuridicaRepository = pessoaJuridicaRepository;
        }
 
+    public Optional<PessoaJuridicaModel> findById(Integer id){return pessoaJuridicaRepository.findById(id);}
+
+    public List<PessoaJuridicaModel> listar(){return pessoaJuridicaRepository.findAll();}
 
 }

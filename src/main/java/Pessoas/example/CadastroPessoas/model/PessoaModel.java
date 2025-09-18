@@ -1,5 +1,6 @@
 package Pessoas.example.CadastroPessoas.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,12 @@ public class PessoaModel {
 
     @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
     private PessoaEnderecoModel endereco;
+
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private PessoaFisicaModel pessoapf;
+
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private PessoaJuridicaModel pessoapj;
 
     @Column
     private String nome;
@@ -28,6 +35,22 @@ public class PessoaModel {
 
     public void setIdPessoa(Integer idPessoa) {
         this.idPessoa = idPessoa;
+    }
+
+    public PessoaFisicaModel getPessoapf() {
+        return pessoapf;
+    }
+
+    public void setPessoapf(PessoaFisicaModel pessoapf) {
+        this.pessoapf = pessoapf;
+    }
+
+    public PessoaJuridicaModel getPessoapj() {
+        return pessoapj;
+    }
+
+    public void setPessoapj(PessoaJuridicaModel pessoapj) {
+        this.pessoapj = pessoapj;
     }
 
     public PessoaEnderecoModel getEndereco() {

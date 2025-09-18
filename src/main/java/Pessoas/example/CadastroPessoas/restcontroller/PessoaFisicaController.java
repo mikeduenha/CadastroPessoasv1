@@ -1,5 +1,6 @@
 package Pessoas.example.CadastroPessoas.restcontroller;
 
+import Pessoas.example.CadastroPessoas.model.PessoaEnderecoModel;
 import Pessoas.example.CadastroPessoas.model.PessoaFisicaModel;
 import Pessoas.example.CadastroPessoas.service.PessoaFisicaService;
 import org.apache.coyote.Response;
@@ -18,5 +19,16 @@ public class PessoaFisicaController {
         this.pessoaFisicaService = pessoaFisicaService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PessoaFisicaModel> findById(@PathVariable int id) {
+        var pessoaopf = pessoaFisicaService.findById(id);
 
+        if (pessoaopf.isPresent()) {
+            return ResponseEntity.ok(pessoaopf.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/")
+    public List<PessoaFisicaModel> findAll() {return pessoaFisicaService.listar();}
 }

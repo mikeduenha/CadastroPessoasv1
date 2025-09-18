@@ -1,5 +1,7 @@
 package Pessoas.example.CadastroPessoas.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Optional;
@@ -13,7 +15,8 @@ public class PessoaEnderecoModel {
     @Column
     private Integer idEndereco;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
     private PessoaModel pessoa;
 
     @Column

@@ -1,24 +1,32 @@
 meta {
   name: UpdEndereco
   type: http
-  seq: 18
+  seq: 19
 }
 
 put {
-  url: http://localhost:8080/api/enderece/2
+  url: http://localhost:8080/api/pessoa/1/endereco
   body: json
   auth: inherit
 }
 
 body:json {
   {
-     "nome": "Kevim",
-     "cpf": "cpfdokevimZUERO",
-     "rg": "rgdokevim",
-     "email": "kevim@gmail.com",
-     "telefone": "telefonekevim",
-     "celular": "celularkevim",
-     "idEndereco": 5
+    
+     "cep": "09100100",
+     "logradouro": "aaaaa",
+     "complemento": "aaaaaa",
+     "unidade": "1",
+     "bairro": "bbbbbb",
+     "localidade": "local",
+     "uf": "sp",
+     "estado": "ccccccccc",
+     "regiao": "aaaaaaaa",
+     "ibge": "dddddddddd",
+     "gia": "eeeeeeee",
+     "ddd": "aaaaaaaaa",
+     "siafi": "aaaaaaaaaaa"  
+  
   }
 }
 

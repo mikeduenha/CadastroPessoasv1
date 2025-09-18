@@ -1,5 +1,6 @@
 package Pessoas.example.CadastroPessoas.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,14 +13,13 @@ public class PessoaFisicaModel {
     @Column
     private String cpf;
     @Column
-    private String nome;
+    private String rg;
     @Column
-    private String email;
-    @Column
-    private String telefone;
-    @Column
-    private String celular;
+    private String datanasc;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private PessoaModel pessoa;
 
     public Integer getIdPessoaPF() {
         return idPessoaPF;
@@ -37,35 +37,27 @@ public class PessoaFisicaModel {
         this.cpf = cpf;
     }
 
-    public String getNome() {
-        return nome;
+    public String getRg() {
+        return rg;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setRg(String rg) {
+        this.rg = rg;
     }
 
-    public String getEmail() {
-        return email;
+    public String getDatanasc() {
+        return datanasc;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDatanasc(String datanasc) {
+        this.datanasc = datanasc;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public PessoaModel getPessoa() {
+        return pessoa;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public void setPessoa(PessoaModel pessoa) {
+        this.pessoa = pessoa;
     }
 }

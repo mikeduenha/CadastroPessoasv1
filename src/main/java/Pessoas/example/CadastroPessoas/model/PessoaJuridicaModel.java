@@ -1,5 +1,6 @@
 package Pessoas.example.CadastroPessoas.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,15 +13,11 @@ public class PessoaJuridicaModel {
     @Column
     private String cnpj;
     @Column
-    private String nome;
-    @Column
-    private String email;
-    @Column
-    private String telefone;
-    @Column
-    private String celular;
-    @Column
-    private Integer idEndereco ;
+    private String razaosocial;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private PessoaModel pessoa;
 
     public Integer getIdPessoaPJ() {
         return idPessoaPJ;
@@ -38,43 +35,19 @@ public class PessoaJuridicaModel {
         this.cnpj = cnpj;
     }
 
-    public String getNome() {
-        return nome;
+    public String getRazaosocial() {
+        return razaosocial;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setRazaosocial(String razao_social) {
+        this.razaosocial = razao_social;
     }
 
-    public String getEmail() {
-        return email;
+    public PessoaModel getPessoa() {
+        return pessoa;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public Integer getIdEndereco() {
-        return idEndereco;
-    }
-
-    public void setIdEndereco(Integer idEndereco) {
-        this.idEndereco = idEndereco;
+    public void setPessoa(PessoaModel pessoa) {
+        this.pessoa = pessoa;
     }
 }

@@ -5,19 +5,15 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/api/pessoajuridica/
+  url: http://localhost:8080/api/pessoa/1/pessoapj
   body: json
   auth: inherit
 }
 
 body:json {
   {
-     "nome": "Kevim",
-     "cnpj": "cnpjdokevim",
-     "email": "kevim@gmail.com",
-     "telefone": "telefonekevim",
-     "celular": "celularkevim",
-     "idEndereco": 1
+     "cnpj": "cnpjKevim",
+     "razaosocial": "razaodokevim"   
   }
 }
 

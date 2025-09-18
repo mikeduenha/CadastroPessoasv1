@@ -16,5 +16,8 @@ public class PessoaFisicaService {
       this.pessoaFisicaRepository = pessoaFisicaRepository;
        }
 
+    public Optional<PessoaFisicaModel> findById(Integer id){return pessoaFisicaRepository.findById(id);}
+
+    public List<PessoaFisicaModel> listar(){return pessoaFisicaRepository.findAll();}
 
 }

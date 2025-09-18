@@ -1,8 +1,6 @@
 package Pessoas.example.CadastroPessoas.service;
 
-
 import Pessoas.example.CadastroPessoas.model.PessoaEnderecoModel;
-import Pessoas.example.CadastroPessoas.model.PessoaModel;
 import Pessoas.example.CadastroPessoas.repository.PessoaEnderecoRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +17,6 @@ public class PessoaEnderecoService {
     }
 
     public Optional<PessoaEnderecoModel> findById(Integer id){return pessoaEnderecoRepository.findById(id);}
+
+    public List<PessoaEnderecoModel> listar(){return pessoaEnderecoRepository.findAll();}
 }

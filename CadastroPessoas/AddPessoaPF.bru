@@ -5,19 +5,16 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/api/pessoafisica/
+  url: http://localhost:8080/api/pessoa/1/pessoapf
   body: json
   auth: inherit
 }
 
 body:json {
   {
-     "nome": "Kevim",
      "cpf": "cpfdokevim",   
-     "email": "kevim@gmail.com",
-     "telefone": "telefonekevim",
-     "celular": "celularkevim",
-     "idEndereco": 1
+     "rg": "rgdokevim",
+     "datanasc": "01/01/2000"   
   }
 }
 

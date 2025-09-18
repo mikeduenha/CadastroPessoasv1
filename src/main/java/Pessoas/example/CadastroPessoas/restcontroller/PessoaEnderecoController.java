@@ -26,4 +26,7 @@ public class PessoaEnderecoController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/")
+    public List<PessoaEnderecoModel> findAll() {return pessoaEnderecoService.listar();}
 }
