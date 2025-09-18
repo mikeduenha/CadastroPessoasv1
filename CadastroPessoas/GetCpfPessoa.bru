@@ -1,0 +1,15 @@
+meta {
+  name: GetCpfPessoa
+  type: http
+  seq: 8
+}
+
+get {
+  url: http://localhost:8080/api/pessoa/1/pessoapf
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
