@@ -14,7 +14,7 @@ As APIs foram desenvolvidas utilizando Spring Boot e seguem os princípios RESTf
 Conforme modelagem de dados, é necessário seguir a ordem de criação, Pessoas > Entidades filhas.
 Dentro da pasta CadastroPessoas/local existe as collections para uso/teste das APIs para uso no HttpClient Bruno API Client em https://www.usebruno.com/.   
 
-Pessoas APIs:
+#### Pessoas APIs:
 
 - {GET [/api/pessoa/]}	PessoaController#findAll
 - {POST [/api/pessoa/]}	PessoaController#addPessoa
@@ -22,7 +22,7 @@ Pessoas APIs:
 - {DELETE [/api/pessoa/{id}]}	PessoaController#deletePessoa
 - {GET [/api/pessoa/{id}]}	PessoaController#findById
 
-Endereço das Pessoas APIs:
+#### Endereço das Pessoas APIs:
 - {GET [/api/endereco/]}	EnderecoController#findAll 
 - {POST [/api/endereco/]}	EnderecoController#addEndereco 
 - {PUT [/api/endereco/{id}]}	EnderecoController#updEndereco
