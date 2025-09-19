@@ -40,7 +40,6 @@ public class PessoaService {
         if (optional.isEmpty()) {
             return Optional.empty();
         }
-
         var pessoaloriginal = optional.get();
         pessoaloriginal.setNome(pessoaModel.getNome());
         pessoaloriginal.setCelular(pessoaModel.getCelular());
