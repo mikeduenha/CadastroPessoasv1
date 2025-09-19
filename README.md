@@ -16,20 +16,20 @@ Dentro da pasta CadastroPessoas/local existe as collections para uso/teste das A
 
 Pessoas APIs:
 
-{GET [/api/pessoa/]}	PessoaController#findAll
-{POST [/api/pessoa/]}	PessoaController#addPessoa
-{PUT [/api/pessoa/{id}]}	PessoaController#updPessoa
-{DELETE [/api/pessoa/{id}]}	PessoaController#deletePessoa
-{GET [/api/pessoa/{id}]}	PessoaController#findById
+- {GET [/api/pessoa/]}	PessoaController#findAll
+- {POST [/api/pessoa/]}	PessoaController#addPessoa
+- {PUT [/api/pessoa/{id}]}	PessoaController#updPessoa
+- {DELETE [/api/pessoa/{id}]}	PessoaController#deletePessoa
+- {GET [/api/pessoa/{id}]}	PessoaController#findById
 
 Endereço das Pessoas APIs:
-{GET [/api/endereco/]}	EnderecoController#findAll
-{POST [/api/endereco/]}	EnderecoController#addEndereco
-{PUT [/api/endereco/{id}]}	EnderecoController#updEndereco
-{DELETE [/api/endereco/{id}]}	EnderecoController#deleteEndereco
-{GET [/api/endereco/{id}]}	EnderecoController#findById
-{GET [/api/endereco/pessoa/{id}]}	EnderecoController#findByPessoaId
-{PUT [/api/endereco/principal/{id}]}	EnderecoController#setEnderecoPrincipal
+- {GET [/api/endereco/]}	EnderecoController#findAll 
+- {POST [/api/endereco/]}	EnderecoController#addEndereco 
+- {PUT [/api/endereco/{id}]}	EnderecoController#updEndereco
+- {DELETE [/api/endereco/{id}]}	EnderecoController#deleteEndereco
+- {GET [/api/endereco/{id}]}	EnderecoController#findById
+- {GET [/api/endereco/pessoa/{id}]}	EnderecoController#findByPessoaId
+- {PUT [/api/endereco/principal/{id}]}	EnderecoController#setEnderecoPrincipal
 
 ### Tecnologias Utilizadas
 - Java 24
