@@ -59,7 +59,7 @@ class PessoaServiceTest {
     private ArgumentCaptor<String> captorString;
 
     @Nested
-    class addPessoa{
+    class AddPessoa{
 
         @Test
         @DisplayName("Should create a user with sucess")
@@ -102,7 +102,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class findById{
+    class FindById{
 
         @Test
         @DisplayName("Should get user by id with sucess with optional is present")
@@ -145,7 +145,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class findByCelular{
+    class FindByCelular{
 
         @Test
         @DisplayName("Should get user by celular with sucess with optional is present")
@@ -188,7 +188,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class listar{
+    class Listar{
 
         @Test
         @DisplayName("Should return all users with sucess")
@@ -213,7 +213,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class deletePessoa{
+    class DeletePessoa{
 
         @Test
         @DisplayName("Should delete user with sucess")
@@ -257,7 +257,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class updPessoa{
+    class UpdPessoa{
 
         @Test
         @DisplayName("Should update user by id with sucess when user exists")
@@ -303,7 +303,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class createEndereco {
+    class CreateEndereco {
 
         @Test
         @DisplayName("Should create a address with sucess")
@@ -359,7 +359,7 @@ class PessoaServiceTest {
     }
 
         @Nested
-        class updEndereco {
+        class UpdEndereco {
 
             @Test
             @DisplayName("Should update endereço when pessoa exists")
@@ -403,7 +403,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class findEndereco {
+    class FindEndereco {
 
         @Test
         @DisplayName("Should return endereço when pessoa exists")
@@ -443,7 +443,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class createPF {
+    class CreatePF {
 
         @Test
         @DisplayName("Should create PessoaFisica when pessoa exists")
@@ -486,7 +486,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class findPF {
+    class FindPF {
 
         @Test
         @DisplayName("Should return PessoaFisica when pessoa exists")
@@ -519,7 +519,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class updPF {
+    class UpdPF {
 
         @Test
         @DisplayName("Should update PessoaFisica when pessoa exists")
@@ -560,7 +560,7 @@ class PessoaServiceTest {
         }
     }
     @Nested
-    class createPJ {
+    class CreatePJ {
 
         @Test
         @DisplayName("Should create PessoaJuridica when pessoa exists")
@@ -601,7 +601,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class findPJ {
+    class FindPJ {
 
         @Test
         @DisplayName("Should return PessoaJuridica when pessoa exists")
@@ -634,7 +634,7 @@ class PessoaServiceTest {
     }
 
     @Nested
-    class updPJ {
+    class UpdPJ {
 
         @Test
         @DisplayName("Should update PessoaJuridica when pessoa exists")

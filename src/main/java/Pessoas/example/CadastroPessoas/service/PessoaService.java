@@ -30,6 +30,7 @@ public class PessoaService {
         this.pessoaJuridicaRepository = pessoaJuridicaRepository;
     }
 
+    //Metodos Pessoa
     public void addPessoa(PessoaModel pessoaModel){pessoaRepository.save(pessoaModel);}
     public List<PessoaModel> listar(){return pessoaRepository.findAll();}
     public Optional<PessoaModel> findById(Integer id){return pessoaRepository.findById(id);}

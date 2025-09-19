@@ -30,7 +30,7 @@ class PessoaEnderecoServiceTest {
     private ArgumentCaptor<Integer> captorEnderecoId;
 
     @Nested
-    class findById{
+    class FindById{
 
         @Test
         @DisplayName("Should get Address with sucess with optional is present")
@@ -81,7 +81,7 @@ class PessoaEnderecoServiceTest {
         }
     }
     @Nested
-    class listar{
+    class Listar{
 
         @Test
         @DisplayName("Should return all address with sucess")

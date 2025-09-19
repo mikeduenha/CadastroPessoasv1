@@ -31,7 +31,7 @@ class PessoaFisicaServiceTest {
     private ArgumentCaptor<Integer> captorPessoaId;
 
     @Nested
-    class findById{
+    class FindById{
 
         @Test
         @DisplayName("Should get user by id with sucess with optional is present")
@@ -73,7 +73,7 @@ class PessoaFisicaServiceTest {
         }
     }
     @Nested
-    class listar{
+    class Listar{
 
         @Test
         @DisplayName("Should return all address with sucess")
